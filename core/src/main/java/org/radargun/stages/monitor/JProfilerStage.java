@@ -20,7 +20,6 @@ package org.radargun.stages.monitor;
 
 import java.lang.management.ManagementFactory;
 import java.util.Collection;
-
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -28,7 +27,6 @@ import org.radargun.DistStageAck;
 import org.radargun.config.Property;
 import org.radargun.config.Stage;
 import org.radargun.stages.AbstractDistStage;
-import org.radargun.stages.DefaultDistStageAck;
 
 /**
  * Stage for invoking operations on JProfiler. Remember to set up JVM args:
@@ -96,7 +94,7 @@ public class JProfilerStage extends AbstractDistStage {
    public DistStageAck executeOnSlave() {
       if (operations == null || operations.isEmpty()) {
          log.warn("No operation specified");
-         return newDefaultStageAck();
+         return successfulResponse();
       }
       for (Operation operation : operations) {
          MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
@@ -106,15 +104,15 @@ public class JProfilerStage extends AbstractDistStage {
                objectName = new ObjectName(JPROFILER6_CONTROLLER_OBJECT_NAME);
                if (!mbs.isRegistered(objectName)) {
                   log.info("JProfiler not enabled on this node.");
-                  return newDefaultStageAck();
+                  return successfulResponse();
                }
             }
             mbs.invoke(objectName, operation.getName(), getParams(operation), operation.getSignature());
          } catch (Exception e) {
-            return error(e);
+            return errorResponse("Failed to execute JMX operations", e);
          }
       }
-      return newDefaultStageAck();
+      return successfulResponse();
    }
 
    private Object[] getParams(Operation operation) {
@@ -138,15 +136,5 @@ public class JProfilerStage extends AbstractDistStage {
       default:
          throw new UnsupportedOperationException();
       }
-   }
-
-   private DistStageAck error(Exception e) {
-      String message = "Failed to execute JMX operations";
-      log.error(message, e);
-      DefaultDistStageAck ack = newDefaultStageAck();
-      ack.setError(true);
-      ack.setErrorMessage(message);
-      ack.setRemoteException(e);
-      return ack;
    }
 }

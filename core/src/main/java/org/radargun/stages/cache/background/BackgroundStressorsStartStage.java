@@ -4,7 +4,6 @@ import org.radargun.DistStageAck;
 import org.radargun.config.PropertyDelegate;
 import org.radargun.config.Stage;
 import org.radargun.stages.AbstractDistStage;
-import org.radargun.stages.DefaultDistStageAck;
 import org.radargun.stages.helpers.BucketPolicy;
 
 /**
@@ -28,7 +27,6 @@ public class BackgroundStressorsStartStage extends AbstractDistStage {
 
    @Override
    public DistStageAck executeOnSlave() {
-      DefaultDistStageAck ack = newDefaultStageAck();
       slaveState.put(BucketPolicy.LAST_BUCKET, generalConfiguration.cacheName);
       try {
          BackgroundOpsManager instance = BackgroundOpsManager.getOrCreateInstance(slaveState,
@@ -39,12 +37,9 @@ public class BackgroundStressorsStartStage extends AbstractDistStage {
             instance.startBackgroundThreads();
          }
 
-         return ack;
+         return successfulResponse();
       } catch (Exception e) {
-         log.error("Error while starting background stats", e);
-         ack.setError(true);
-         ack.setRemoteException(e);
-         return ack;
+         return errorResponse("Error while starting background stats", e);
       }
    }
 }

@@ -71,6 +71,6 @@ public class SetLogLevelStage extends AbstractDistStage {
       } catch (Exception e) {
          log.error("Failed to change log level", e);
       }
-      return newDefaultStageAck();
+      return successfulResponse();
    }
 }
