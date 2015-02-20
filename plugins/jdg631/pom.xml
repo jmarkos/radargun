@@ -10,18 +10,30 @@
       <relativePath>../pom.xml</relativePath>
    </parent>
 
-   <artifactId>plugin-jdg64</artifactId>
-   <name>JDG 6.4.x plugin for RadarGun</name>
+   <artifactId>plugin-jdg631</artifactId>
+   <name>JDG 6.3.1 plugin for RadarGun</name>
 
    <properties>
-      <version.infinispan>6.2.0.Final-redhat-4</version.infinispan>
+      <version.infinispan>6.1.1.Final-redhat-5</version.infinispan>
       <version.jbossts>1.0.1.Final-redhat-2</version.jbossts>
    </properties>
 
    <dependencies>
       <dependency>
          <groupId>org.infinispan</groupId>
-         <artifactId>infinispan-embedded-query</artifactId>
+         <artifactId>infinispan-core</artifactId>
+         <version>${version.infinispan}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.infinispan</groupId>
+         <artifactId>infinispan-query</artifactId>
+         <version>${version.infinispan}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.infinispan</groupId>
+         <artifactId>infinispan-cachestore-jdbc</artifactId>
          <version>${version.infinispan}</version>
       </dependency>
 
@@ -61,10 +73,6 @@
             <exclusion>
                <groupId>org.jboss.spec.javax.transaction</groupId>
                <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-            </exclusion>
-            <exclusion>
-               <groupId>org.infinispan</groupId>
-               <artifactId>infinispan-commons</artifactId>
             </exclusion>
          </exclusions>
       </dependency>

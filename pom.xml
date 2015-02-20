@@ -132,6 +132,7 @@
             <module>plugins/jdg60</module>
             <module>plugins/jdg61</module>
             <module>plugins/jdg62</module>
+            <module>plugins/jdg631</module>
             <module>plugins/jdg64</module>
          </modules>
          <build>
@@ -162,6 +163,11 @@
                               </copy>
                               <copy todir="${distribution.artifact}/plugins/jdg62">
                                  <fileset dir="plugins/jdg62/target/distribution/plugin-jdg62-bin/plugin-jdg62">
+                                    <include name="**/*" />
+                                 </fileset>
+                              </copy>
+                              <copy todir="${distribution.artifact}/plugins/jdg631">
+                                 <fileset dir="plugins/jdg631/target/distribution/plugin-jdg631-bin/plugin-jdg631">
                                     <include name="**/*" />
                                  </fileset>
                               </copy>
