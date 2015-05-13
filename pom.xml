@@ -21,6 +21,7 @@
       <module>plugins/infinispan60</module>
       <module>plugins/infinispan70</module>
       <module>plugins/infinispan71</module>
+      <module>plugins/infinispan72</module>
       <module>plugins/jgroups30</module>
       <module>plugins/jgroups32</module>
       <module>plugins/jgroups33</module>
@@ -48,15 +49,15 @@
 
    <profiles>
       <profile>
-         <!-- TODO: temporary profile for infinispan72, once there's a first release, add it among standard modules
+         <!-- TODO: temporary profile for infinispan80, once there's a first release, add it among standard modules
               after this is done, also leave a infinispan70-snapshot profile for building the plugin with SNAPSHOT version
               similar to how it's done in infinispan60 plugin -->
-         <id>infinispan72-snapshot</id>
+         <id>infinispan80-snapshot</id>
          <activation>
             <activeByDefault>false</activeByDefault>
          </activation>
          <modules>
-            <module>plugins/infinispan72</module>
+            <module>plugins/infinispan80</module>
          </modules>
          <build>
             <plugins>
@@ -66,16 +67,16 @@
                   <version>1.3</version>
                   <executions>
                      <execution>
-                        <id>prepare_infinispan72_plugin</id>
+                        <id>prepare_infinispan80_plugin</id>
                         <phase>verify</phase>
                         <goals>
                            <goal>run</goal>
                         </goals>
                         <configuration>
                            <tasks>
-                              <echo message="Packaging the infinispan72 plugin" />
-                              <copy todir="${distribution.artifact}/plugins/infinispan72">
-                                 <fileset dir="plugins/infinispan70/target/distribution/plugin-infinispan72-bin/plugin-infinispan72">
+                              <echo message="Packaging the infinispan80 plugin" />
+                              <copy todir="${distribution.artifact}/plugins/infinispan80">
+                                 <fileset dir="plugins/infinispan80/target/distribution/plugin-infinispan80-bin/plugin-infinispan80">
                                    <include name="**/*" />
                                  </fileset>
                               </copy>
