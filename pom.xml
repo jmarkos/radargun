@@ -22,6 +22,7 @@
       <module>plugins/infinispan70</module>
       <module>plugins/infinispan71</module>
       <module>plugins/infinispan72</module>
+      <module>plugins/infinispan80</module>
       <module>plugins/jgroups30</module>
       <module>plugins/jgroups32</module>
       <module>plugins/jgroups33</module>
@@ -52,12 +53,12 @@
          <!-- TODO: temporary profile for infinispan80, once there's a first release, add it among standard modules
               after this is done, also leave a infinispan70-snapshot profile for building the plugin with SNAPSHOT version
               similar to how it's done in infinispan60 plugin -->
-         <id>infinispan80-snapshot</id>
+         <id>infinispan90-snapshot</id>
          <activation>
             <activeByDefault>false</activeByDefault>
          </activation>
          <modules>
-            <module>plugins/infinispan80</module>
+            <module>plugins/infinispan90</module>
          </modules>
          <build>
             <plugins>
@@ -67,16 +68,16 @@
                   <version>1.3</version>
                   <executions>
                      <execution>
-                        <id>prepare_infinispan80_plugin</id>
+                        <id>prepare_infinispan90_plugin</id>
                         <phase>verify</phase>
                         <goals>
                            <goal>run</goal>
                         </goals>
                         <configuration>
                            <tasks>
-                              <echo message="Packaging the infinispan80 plugin" />
-                              <copy todir="${distribution.artifact}/plugins/infinispan80">
-                                 <fileset dir="plugins/infinispan80/target/distribution/plugin-infinispan80-bin/plugin-infinispan80">
+                              <echo message="Packaging the infinispan90 plugin" />
+                              <copy todir="${distribution.artifact}/plugins/infinispan90">
+                                 <fileset dir="plugins/infinispan90/target/distribution/plugin-infinispan90-bin/plugin-infinispan90">
                                    <include name="**/*" />
                                  </fileset>
                               </copy>
