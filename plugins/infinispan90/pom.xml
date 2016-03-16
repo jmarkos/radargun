@@ -10,7 +10,7 @@
       <relativePath>../pom.xml</relativePath>
    </parent>
 
-   <artifactId>plugin-infinispan80</artifactId>
+   <artifactId>plugin-infinispan90</artifactId>
    <version>1.1.0-SNAPSHOT</version>
    <name>Infinispan 9.0.x plugin for RadarGun</name>
 
