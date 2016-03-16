@@ -34,6 +34,6 @@ import org.infinispan.container.entries.InternalCacheEntry;
  * @author Radim Vansa &lt;rvansa@redhat.com&gt;
  * @author Michal Linhard (mlinhard@redhat.com)
  */
-public class Infinispan90Wrapper extends Infinispan90Wrapper {
+public class Infinispan90Wrapper extends Infinispan80Wrapper {
 
 }
