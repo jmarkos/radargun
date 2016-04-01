@@ -16,7 +16,7 @@ public class Infinispan80EmbeddedService extends Infinispan70EmbeddedService {
 
    @ProvidesTrait
    public ContinuousQuery createContinuousQuery() {
-      return new InfinispanEmbeddedContinuousQuery(this);
+      return new Infinispan80EmbeddedContinuousQuery(this);
    }
 
    @ProvidesTrait
