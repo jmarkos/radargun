@@ -4,6 +4,7 @@ import java.util.concurrent.ForkJoinPool;
 
 import org.radargun.Service;
 import org.radargun.config.Destroy;
+import org.radargun.traits.ContinuousQuery;
 import org.radargun.traits.ProvidesTrait;
 import org.radargun.utils.Utils;
 
@@ -14,7 +15,7 @@ import org.radargun.utils.Utils;
 public class Infinispan80EmbeddedService extends Infinispan70EmbeddedService {
 
    @ProvidesTrait
-   public InfinispanEmbeddedContinuousQuery createContinuousQuery() {
+   public ContinuousQuery createContinuousQuery() {
       return new InfinispanEmbeddedContinuousQuery(this);
    }
 
