@@ -19,15 +19,15 @@ import org.radargun.logging.LogFactory;
 import org.radargun.utils.Utils;
 
 /**
- * Snapshots JGroups status every 10 seconds, printing the information into log.
+ * Snapshots JGroups status every 10 seconds (Interval is configurable), printing the information into log.
  *
  * @author Radim Vansa &lt;rvansa@redhat.com&gt;
  */
 public class JGroupsDumper extends Thread {
-   private static final Log log = LogFactory.getLog(JGroupsDumper.class);
-   private final ProtocolStack stack;
-   private static final List<ProtocolDumper> dumpers = new ArrayList<ProtocolDumper>();
-   private final long interval;
+   protected static final Log log = LogFactory.getLog(JGroupsDumper.class);
+   protected static final List<ProtocolDumper> dumpers = new ArrayList<>();
+   protected final ProtocolStack stack;
+   protected final long interval;
 
    static {
       dumpers.add(new UNICAST3Dumper());
@@ -72,13 +72,13 @@ public class JGroupsDumper extends Thread {
       log.info("Dumper interrupted, finishing");
    }
 
-   private interface ProtocolDumper {
+   protected interface ProtocolDumper {
       boolean accepts(Protocol protocol);
 
       void dump(Protocol protocol);
    }
 
-   private static void logSorted(String string, String prefix) {
+   protected static void logSorted(String string, String prefix) {
       String[] lines = string.split("\n");
       Arrays.sort(lines);
       for (String line : lines) {
@@ -89,7 +89,7 @@ public class JGroupsDumper extends Thread {
       }
    }
 
-   private static class UNICAST3Dumper implements ProtocolDumper {
+   protected static class UNICAST3Dumper implements ProtocolDumper {
       @Override
       public boolean accepts(Protocol protocol) {
          return protocol instanceof UNICAST3;
@@ -104,8 +104,8 @@ public class JGroupsDumper extends Thread {
       }
    }
 
-   private static class TPDumper implements ProtocolDumper {
-      private final Set<String> dumped = new HashSet<String>();
+   protected static class TPDumper implements ProtocolDumper {
+      private final Set<String> dumped = new HashSet<>();
 
       @Override
       public boolean accepts(Protocol protocol) {
@@ -136,7 +136,7 @@ public class JGroupsDumper extends Thread {
          if (dump) Utils.threadDump();
       }
 
-      private boolean checkThreadPool(ThreadPoolExecutor tpe, String name) {
+      protected boolean checkThreadPool(ThreadPoolExecutor tpe, String name) {
          int threshold = (tpe.getMaximumPoolSize() * 95 / 100) - 1;
          log.infof("%s current: %d, active: %d, core: %d, max: %d, scheduled: %d, completed: %d, queue size: %d", name,
             tpe.getPoolSize(), tpe.getActiveCount(), tpe.getCorePoolSize(), tpe.getMaximumPoolSize(),
