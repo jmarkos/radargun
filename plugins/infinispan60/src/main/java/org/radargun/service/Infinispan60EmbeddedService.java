@@ -98,22 +98,33 @@ public class Infinispan60EmbeddedService extends Infinispan53EmbeddedService {
          scheduledExecutor.schedule(new Runnable() {
             @Override
             public void run() {
-               startJGroupsDumper(this);
+               JGroupsTransport transport = (JGroupsTransport) cacheManager.getTransport();
+               if (transport == null || transport.getChannel() == null || !transport.getChannel().isOpen()) {
+                  // JGroups are not initialized, wait
+                  scheduledExecutor.schedule(this, 1, TimeUnit.SECONDS);
+               } else {
+                  jgroupsDumper = blabla(transport);
+                  jgroupsDumper.start();
+               }
             }
          }, 0, TimeUnit.MILLISECONDS);
       }
    }
 
-   protected void startJGroupsDumper(Runnable thread) {
-      JGroupsTransport transport = (JGroupsTransport) cacheManager.getTransport();
-      if (transport == null || transport.getChannel() == null || !transport.getChannel().isOpen()) {
-         // JGroups are not initialized, wait
-         scheduledExecutor.schedule(thread, 1, TimeUnit.SECONDS);
-      } else {
-         jgroupsDumper = new JGroupsDumper(transport.getChannel().getProtocolStack(), jgroupsDumperInterval);
-         jgroupsDumper.start();
-      }
+   protected JGroupsDumper blabla(JGroupsTransport transport) {
+      return new JGroupsDumper(transport.getChannel().getProtocolStack(), jgroupsDumperInterval);
    }
+
+//   protected void startJGroupsDumper(Runnable thread) {
+//      JGroupsTransport transport = (JGroupsTransport) cacheManager.getTransport();
+//      if (transport == null || transport.getChannel() == null || !transport.getChannel().isOpen()) {
+//         // JGroups are not initialized, wait
+//         scheduledExecutor.schedule(thread, 1, TimeUnit.SECONDS);
+//      } else {
+//         jgroupsDumper = new JGroupsDumper(transport.getChannel().getProtocolStack(), jgroupsDumperInterval);
+//         jgroupsDumper.start();
+//      }
+//   }
 
    @Override
    protected void stopCaches() {

@@ -1,6 +1,5 @@
 package org.radargun.service;
 
-import java.util.concurrent.TimeUnit;
 import org.infinispan.remoting.transport.jgroups.JGroupsTransport;
 import org.jgroups.protocols.TP;
 import org.radargun.Service;
@@ -23,14 +22,7 @@ public class Infinispan90EmbeddedService extends Infinispan82EmbeddedService {
    }
 
    @Override
-   protected void startJGroupsDumper(Runnable thread) {
-      JGroupsTransport transport = (JGroupsTransport) cacheManager.getTransport();
-      if (transport == null || transport.getChannel() == null || !transport.getChannel().isOpen()) {
-         // JGroups are not initialized, wait
-         scheduledExecutor.schedule(thread, 1, TimeUnit.SECONDS);
-      } else {
-         jgroupsDumper = new JGroups4Dumper(transport.getChannel().getProtocolStack(), jgroupsDumperInterval);
-         jgroupsDumper.start();
-      }
+   protected JGroupsDumper blabla(JGroupsTransport transport) {
+      return new JGroups4Dumper(transport.getChannel().getProtocolStack(), jgroupsDumperInterval);
    }
 }
